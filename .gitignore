@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+venv/
+ENV/
+data/fiqa/
+data/*.zip
+data/*.npy
+.DS_Store

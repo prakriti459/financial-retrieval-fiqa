@@ -1,0 +1,11 @@
+rank-bm25
+sentence-transformers
+streamlit
+pandas
+numpy
+scipy
+scikit-learn
+matplotlib
+nltk
+tqdm
+requests
