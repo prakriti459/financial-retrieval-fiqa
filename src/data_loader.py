@@ -19,19 +19,19 @@ def download_and_extract_fiqa(data_dir: str = "data") -> str:
 
     if not os.path.exists(dataset_folder):
         if not os.path.exists(zip_path):
-            print(f"📥 Downloading FiQA dataset (~18MB) from {DATASET_URL}...")
+            print(f"[INFO] Downloading FiQA dataset (~18MB) from {DATASET_URL}...")
             response = requests.get(DATASET_URL, stream=True)
             response.raise_for_status()
             with open(zip_path, "wb") as f:
                 for chunk in response.iter_content(chunk_size=16384):
                     if chunk:
                         f.write(chunk)
-            print(" Download completed.")
+            print("[OK] Download completed.")
 
-        print(f"📦 Extracting {zip_path}...")
+        print(f"[INFO] Extracting {zip_path}...")
         with zipfile.ZipFile(zip_path, "r") as zip_ref:
             zip_ref.extractall(data_dir)
-        print(" Extraction completed.")
+        print("[OK] Extraction completed.")
 
     return dataset_folder
 
@@ -48,7 +48,7 @@ def load_fiqa(data_dir: str = "data", split: str = "test") -> Tuple[Dict[str, Di
     # 1. Load Corpus
     corpus_path = os.path.join(dataset_folder, "corpus.jsonl")
     corpus = {}
-    print(f"📖 Loading corpus from {corpus_path}...")
+    print(f"[INFO] Loading corpus from {corpus_path}...")
     with open(corpus_path, "r", encoding="utf-8") as f:
         for line in f:
             item = json.loads(line)

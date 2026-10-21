@@ -17,7 +17,7 @@ class TFIDFRetriever:
         self.doc_ids = list(corpus.keys())
         self.corpus_texts = [f"{corpus[did]['title']} {corpus[did]['text']}".strip() for did in self.doc_ids]
         
-        print(f"⚡ Fitting TF-IDF Vectorizer (max_features={max_features:,})...")
+        print(f"[INFO] Fitting TF-IDF Vectorizer (max_features={max_features:,})...")
         self.vectorizer = TfidfVectorizer(
             tokenizer=lambda t: preprocess_financial_text(t, apply_stemming=True),
             max_features=max_features,
@@ -59,17 +59,17 @@ class BM25Retriever:
             with open(cache_path, "rb") as f:
                 self.bm25 = pickle.load(f)
         else:
-            print("⚡ Tokenizing corpus with financial preprocessing & stemming for BM25...")
+            print("[INFO] Tokenizing corpus with financial preprocessing & stemming for BM25...")
             tokenized_corpus = []
             for did in self.doc_ids:
                 full_text = f"{corpus[did]['title']} {corpus[did]['text']}".strip()
                 tokenized_corpus.append(preprocess_financial_text(full_text, apply_stemming=True))
                 
-            print(" Building BM25Okapi index (k1=1.5, b=0.75)...")
+            print("[INFO] Building BM25Okapi index (k1=1.5, b=0.75)...")
             self.bm25 = BM25Okapi(tokenized_corpus)
             with open(cache_path, "wb") as f:
                 pickle.dump(self.bm25, f)
-        print(" BM25 model ready.")
+        print("[OK] BM25 model ready.")
 
     def retrieve(self, query: str, top_k: int = 100) -> List[Tuple[str, float]]:
         q_tokens = preprocess_financial_text(query, apply_stemming=True)
@@ -99,14 +99,14 @@ class DenseRetriever:
         self.device = device
         self.cache_path = cache_path
         
-        print(f"🧠 Loading Sentence Transformer: {model_name}...")
+        print(f"[INFO] Loading Sentence Transformer: {model_name}...")
         self.model = SentenceTransformer(model_name, device=device)
         
         if os.path.exists(cache_path):
-            print(f" Loading cached dense embeddings from {cache_path}...")
+            print(f"[OK] Loading cached dense embeddings from {cache_path}...")
             self.embeddings = np.load(cache_path)
         else:
-            print(" Encoding 57k documents into 384-dim dense vectors...")
+            print("[INFO] Encoding 57k documents into 384-dim dense vectors...")
             texts = [f"{corpus[did]['title']} {corpus[did]['text']}".strip() for did in self.doc_ids]
             self.embeddings = self.model.encode(
                 texts, 
@@ -116,8 +116,8 @@ class DenseRetriever:
                 device=device
             ).astype(np.float32)
             np.save(cache_path, self.embeddings)
-            print(f" Dense embeddings saved to {cache_path}!")
-        print(" Dense Retriever ready.")
+            print(f"[OK] Dense embeddings saved to {cache_path}!")
+        print("[OK] Dense Retriever ready.")
 
     def retrieve(self, query: str, top_k: int = 100) -> List[Tuple[str, float]]:
         q_emb = self.model.encode([query], normalize_embeddings=True, device=self.device)[0]

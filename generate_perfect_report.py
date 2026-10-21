@@ -451,10 +451,10 @@ for j, h in enumerate(res_headers):
         r.font.color.rgb = RGBColor(0xFF, 0xFF, 0xFF)
 
 benchmark_data = [
-    ("TF-IDF Vector Space Model", "0.0509", "0.4755", "0.1349", "0.1682"),
-    ("Okapi BM25", "0.0594", "0.4608", "0.1679", "0.2110"),
+    ("TF-IDF Vector Space Model", "0.0515", "0.4914", "0.1322", "0.1656"),
+    ("Okapi BM25", "0.0647", "0.5403", "0.1797", "0.2236"),
     ("Sentence Transformer (Dense)", "0.1045", "0.7061", "0.3096", "0.3687"),
-    ("Hybrid RRF (BM25 + TF-IDF + Dense)", "0.0853", "0.6714", "0.2435", "0.2973")
+    ("Hybrid RRF (BM25 + TF-IDF + Dense)", "0.0856", "0.6693", "0.2447", "0.3009")
 ]
 
 for idx, row in enumerate(benchmark_data, start=1):
@@ -490,7 +490,7 @@ add_heading2("4.2 In-Depth Empirical Analysis")
 
 doc.add_paragraph(
     "1. Sparse Baseline Comparison (TF-IDF vs. Okapi BM25): As reported in Table 2, Okapi BM25 achieves superior ranking quality "
-    "compared to TF-IDF, improving MAP by +24.5% (from 0.1349 to 0.1679) and nDCG@10 by +25.4% (from 0.1682 to 0.2110). This "
+    "compared to TF-IDF, improving MAP by +35.9% (from 0.1322 to 0.1797) and nDCG@10 by +35.0% (from 0.1656 to 0.2236). This "
     "empirical difference highlights the benefit of BM25's sublinear term saturation (k1=1.5) and document length normalization (b=0.75). "
     "In user-generated financial forums, conversational posts often contain repetitive words; BM25 caps the marginal score gain of "
     "repeated tokens, preventing overly long threads from artificially dominating search results."
@@ -499,10 +499,10 @@ doc.add_paragraph(
 doc.add_paragraph(
     "2. The Decisive Advantage of Dense Semantic Search: The Sentence Transformer (all-MiniLM-L6-v2) establishes a dominant lead "
     "over all lexical baselines across every single evaluation metric:\n"
-    "• Precision@10 increases from 0.0594 (BM25) to 0.1045 (+75.9% relative gain).\n"
-    "• Recall@100 surges from 0.4608 (BM25) to 0.7061 (+53.2% relative gain).\n"
-    "• MAP increases from 0.1679 to 0.3096 (+84.4% relative gain).\n"
-    "• nDCG@10 increases from 0.2110 to 0.3687 (+74.7% relative gain)."
+    "• Precision@10 increases from 0.0647 (BM25) to 0.1045 (+61.5% relative gain).\n"
+    "• Recall@100 surges from 0.5403 (BM25) to 0.7061 (+30.7% relative gain).\n"
+    "• MAP increases from 0.1797 to 0.3096 (+72.3% relative gain).\n"
+    "• nDCG@10 increases from 0.2236 to 0.3687 (+64.9% relative gain)."
 )
 
 doc.add_paragraph(
@@ -513,9 +513,9 @@ doc.add_paragraph(
 )
 
 doc.add_paragraph(
-    "3. Analysis of Hybrid RRF and the Lexical Redundancy Problem: Hybrid Reciprocal Rank Fusion achieves an nDCG@10 of 0.2973 "
-    "and MAP of 0.2435, delivering a substantial +40.9% improvement over BM25 and +44.7% over TF-IDF. However, equal 3-way RRF "
-    "scores lower than the standalone dense model (0.2973 vs. 0.3687). This reveals the Lexical Redundancy Problem: because TF-IDF "
+    "3. Analysis of Hybrid RRF and the Lexical Redundancy Problem: Hybrid Reciprocal Rank Fusion achieves an nDCG@10 of 0.3009 "
+    "and MAP of 0.2447, delivering a substantial +34.6% improvement over BM25 and +81.7% over TF-IDF. However, equal 3-way RRF "
+    "scores lower than the standalone dense model (0.3009 vs. 0.3687). This reveals the Lexical Redundancy Problem: because TF-IDF "
     "and BM25 are both sparse term-matching algorithms, their top ranked candidate sets overlap heavily. In an unweighted 3-way "
     "voting scheme, sparse documents effectively receive two votes while semantic documents receive only one, diluting the rank "
     "position of high-quality semantic matches. Future iterations can mitigate this by either fusing a single sparse model with "
