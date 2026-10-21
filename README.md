@@ -47,6 +47,7 @@ python run_experiments.py
 ```
 *Outputs saved:*
 * `figures/fiqa_dataset_visualization.png` (Section 2.1)
+* `figures/architecture_diagram.png` (Section 3)
 * `figures/precision_recall_graph.png` (Section 4)
 * `figures/model_performance_comparison.png` (Section 4)
 
