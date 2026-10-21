@@ -110,9 +110,9 @@ for i, h in enumerate(headers):
             r.font.color.rgb = RGBColor(0xFF, 0xFF, 0xFF)
 
 students_data = [
-    ("Prakriti", "[Registration No.]", "[email@institution.edu]"),
-    ("Nishtha", "[Registration No.]", "[email@institution.edu]"),
-    ("[Student 3 Name]", "[Registration No.]", "[email@institution.edu]")
+    ("Prakriti", "23FE10CSE00459", "PRAKRITI.23FE10CSE00459@muj.manipal.edu"),
+    ("Nishtha", "[Registration No.]", "[email@muj.manipal.edu]"),
+    ("[Student 3 Name]", "[Registration No.]", "[email@muj.manipal.edu]")
 ]
 
 for row_idx, data in enumerate(students_data, start=1):
