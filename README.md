@@ -51,14 +51,7 @@ python run_experiments.py
 * `figures/precision_recall_graph.png` (Section 4)
 * `figures/model_performance_comparison.png` (Section 4)
 
-### 3. Launch Interactive Search Interface (10-Mark Demonstration)
-To start the live interactive search engine for demonstration:
-```bash
-streamlit run app.py
-```
-Open your browser at `http://localhost:8501`.
 
----
 
 ## 📁 Repository Structure
 ```
